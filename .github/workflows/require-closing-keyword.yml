@@ -18,6 +18,9 @@ permissions:
 
 jobs:
   check-closing-keyword:
+    # Skip bot-authored PRs (Dependabot, Renovate, etc.) — they can't link
+    # issues, so the check is noise on every dep bump.
+    if: ${{ !endsWith(github.event.pull_request.user.login, '[bot]') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check PR body for a GitHub closing keyword
